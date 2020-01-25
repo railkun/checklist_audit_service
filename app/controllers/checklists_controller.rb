@@ -14,6 +14,10 @@ class ChecklistsController < ApplicationController
 
   def create
     @checklist = Checklist.create(checklist_params)
+    render json: {
+      status: :ok,
+      redirect_url: checklists_path
+    }
   end
 
   def edit
@@ -36,11 +40,10 @@ class ChecklistsController < ApplicationController
 
   private
 
-  def question_params
-    params.require(:questions).permit(:title, :description, :checklist_id)
-  end
-
   def checklist_params
-    params.require(:checklist).permit(:title, :description)
+    params[:data].require(:checklist).permit(:title, :description, questions_attributes: [
+        :title, :description
+      ]
+    )
   end
 end

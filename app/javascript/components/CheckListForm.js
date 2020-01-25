@@ -9,30 +9,7 @@ class CheckListForm extends React.Component {
     super(props);
 
     // this.state = { title: '', description: '', questions: []};
-
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-
-  handleClick() {
-
-    axios.post('/checklists', {
-      checklist: {
-        title: this.state.title ,
-        description: this.state.description
-      }
-    })
-  };
 
   render () {
     return (
@@ -40,7 +17,27 @@ class CheckListForm extends React.Component {
         <Formik
           initialValues={{ title: '', description: '', questions: [] }}
           onSubmit={(values, { setSubmitting }) => {
-            console.log(values.questions)
+            let data = {
+              checklist: {
+                title: values.title,
+                description: values.description,
+                questions_attributes: []
+              }
+            };
+            values.questions.map((question, index) => {
+              data['checklist']['questions_attributes'][index] = {
+                title: question.title,
+                description: question.description
+              }
+            })
+
+            axios.post('/checklists', {
+              data
+            }).then(function (response) {
+              window.location.replace(response.redirect_url);
+            })
+            //
+            // console.log(values.questions)
             // setTimeout(() => {
             //   alert(JSON.stringify(values, null, 2));
             //   setSubmitting(false);
