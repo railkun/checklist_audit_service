@@ -3,6 +3,18 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import TextField from '@material-ui/core/TextField';
+import * as Yup from 'yup';
+
+const SignupSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  description: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required')
+});
 
 class CheckListForm extends React.Component {
   constructor(props) {
@@ -16,7 +28,9 @@ class CheckListForm extends React.Component {
       <div>
         <Formik
           initialValues={{ title: '', description: '', questions: [] }}
+          validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
+            alert('Vovovo palegshche');
             let data = {
               checklist: {
                 title: values.title,

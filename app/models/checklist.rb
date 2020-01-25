@@ -6,4 +6,8 @@ class Checklist < ApplicationRecord
   validates :description, presence: true
 
   accepts_nested_attributes_for :questions, :allow_destroy => true
+
+  def props
+    attributes.merge({'questions' => questions.map{ |q| q.attributes }})
+  end
 end

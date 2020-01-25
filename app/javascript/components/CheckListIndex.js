@@ -1,6 +1,8 @@
 import React from "react";
 import CheckListItem from "./CheckListItem";
+
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 
 
 class CheckListIndex extends React.Component {
@@ -14,14 +16,14 @@ class CheckListIndex extends React.Component {
     );
 
     return (
-      <div>
+      <Container maxWidth="sm">
         <Button variant="contained" color="primary" href= {this.props.new_checklist_url} >
           Create checklist
         </Button>
         <ul className="col-md-4 list-group">
           {checklists}
         </ul>
-      </div>
+      </Container>
     );
   };
 }

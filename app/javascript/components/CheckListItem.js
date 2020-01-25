@@ -29,7 +29,7 @@ class CheckListItem extends React.Component {
                 Delete
               </Button>
             </div>
-          </div >
+          </div>
         </Grid>
       </Grid>
     );
