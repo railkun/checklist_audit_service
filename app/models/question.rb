@@ -3,5 +3,5 @@ class Question < ApplicationRecord
   has_many :answers
 
   validates :title, presence: true, length: { in: 12..40 }
-  validates :desription, presense: true
+  validates :desription, presence: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_18_001402) do
+ActiveRecord::Schema.define(version: 2020_01_21_165754) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "checklist_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_01_18_001402) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "checklist_id"
   end
 
 end

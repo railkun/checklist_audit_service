@@ -1,2 +1,2 @@
-
-<%= react_component("CheckListIndex", { checklists: @checklists.map{|c| {title: c.title, description: c.description}} }) %>
+<%= react_component("CheckListIndex", { checklists: @checklists.map{|c| {title: c.title,
+   description: c.description, url: checklist_path(c), edit_url: edit_checklist_path(c) }} , new_checklist_url: new_checklist_path}) %>

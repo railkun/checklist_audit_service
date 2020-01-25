@@ -1,20 +1,27 @@
 import React from "react";
-import CheckList from "./CheckList";
+import CheckListItem from "./CheckListItem";
+import Button from '@material-ui/core/Button';
+
 
 class CheckListIndex extends React.Component {
 
   render () {
-    const checklisdsts = this.props.checklists.map((el) => {
+    const checklists = this.props.checklists.map((el) => {
         return (
-          <CheckList checklist={el} />
+          <CheckListItem checklist={el} />
         )
       }
     );
 
     return (
-      <ul>
-        {checklisdsts}
-      </ul>
+      <div>
+        <Button variant="contained" color="primary" href= {this.props.new_checklist_url} >
+          Create checklist
+        </Button>
+        <ul className="col-md-4 list-group">
+          {checklists}
+        </ul>
+      </div>
     );
   };
 }
