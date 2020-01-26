@@ -1,1 +1,4 @@
-<%= react_component("CheckListForm", { checklist_create_url: checklists_path }) %>
+<%= react_component("CheckListForm", {
+  url: checklists_path,
+  http_method: 'post',
+  checklist: @checklist.props }) %>

@@ -19,18 +19,18 @@ const SignupSchema = Yup.object().shape({
 class CheckListForm extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.state = { title: '', description: '', questions: []};
   }
 
   render () {
+    const checklist =  this.props.checklist;
+    const http_method = this.props.http_method;
+
     return (
       <div>
         <Formik
-          initialValues={{ title: '', description: '', questions: [] }}
+          initialValues={{ title: checklist.title, description: checklist.description, questions: checklist.questions }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
-            alert('Vovovo palegshche');
             let data = {
               checklist: {
                 title: values.title,
@@ -41,15 +41,18 @@ class CheckListForm extends React.Component {
             values.questions.map((question, index) => {
               data['checklist']['questions_attributes'][index] = {
                 title: question.title,
-                description: question.description
+                description: question.description,
+                id: question.id
               }
             })
 
-            axios.post('/checklists', {
-              data
+            axios({
+              method: this.props.http_method,
+              url:  this.props.url,
+              data: data
             }).then(function (response) {
-              window.location.replace(response.redirect_url);
-            })
+              window.location.href = response.data.redirect_url;
+            });
             //
             // console.log(values.questions)
             // setTimeout(() => {
@@ -77,6 +80,9 @@ class CheckListForm extends React.Component {
                     {values.questions && values.questions.length > 0 ? (
                       values.questions.map((question, index) => (
                         <div key={index}>
+                          {question.id && (
+                            <Field type="hidden" name={`questions.${index}.id`} />
+                          )}
                           <Field name={`questions.${index}.title`} />
                           <Field name={`questions.${index}.description`} />
                           <button

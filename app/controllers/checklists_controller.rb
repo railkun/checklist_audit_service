@@ -10,6 +10,7 @@ class ChecklistsController < ApplicationController
   end
 
   def new
+    @checklist = Checklist.new
   end
 
   def create
@@ -25,12 +26,13 @@ class ChecklistsController < ApplicationController
   end
 
   def update
-    @question = Question.new(question_params)
-    if @question.save
-      @checklist.update(checklist_params)
-    else
-      return
-    end
+    @checklist = Checklist.find(params[:id])
+
+    @checklist.update(checklist_params)
+    render json: {
+      status: :ok,
+      redirect_url: checklists_path
+    }
   end
 
   def destroy
@@ -41,8 +43,8 @@ class ChecklistsController < ApplicationController
   private
 
   def checklist_params
-    params[:data].require(:checklist).permit(:title, :description, questions_attributes: [
-        :title, :description
+    params.require(:checklist).permit(:title, :description, questions_attributes: [
+        :id, :title, :description
       ]
     )
   end

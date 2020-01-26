@@ -1,37 +1,45 @@
 import React from "react";
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+
 import axios from 'axios';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import InfoIcon from '@material-ui/icons/Info';
+
+
+
+
 
 class CheckListItem extends React.Component {
-  handleClickDelete() {
 
-  axios.delete(this.props.checklist.url)
+  handleClickDelete() {
+    axios.delete(this.props.checklist.url)
   };
 
   render () {
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <div>
-            <a href={this.props.checklist.url}>
-              <div> Title: {this.props.checklist.title}</div>
-            </a>
+      <TableRow hover key={this.props.checklist.id}>
+        <TableCell component="th" scope="row">
+          {this.props.checklist.title}
+        </TableCell>
+        <TableCell>{this.props.checklist.description}</TableCell>
+        <TableCell align="center">
+          <IconButton color="primary" href={this.props.checklist.url}>
+            <InfoIcon />
+          </IconButton>
+          <IconButton href={this.props.checklist.edit_url}>
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="delete" color="secondary" onClick={this.handleClickDelete.bind(this)}>
+            <DeleteIcon />
+          </IconButton>
 
-            <div> Description: {this.props.checklist.description}</div>
-
-            <div>
-              <Button variant="contained" href={this.props.checklist.edit_url}>
-                Edit
-              </Button>
-
-              <Button variant="contained" color="secondary" onClick={this.handleClickDelete.bind(this)}>
-                Delete
-              </Button>
-            </div>
-          </div>
-        </Grid>
-      </Grid>
+        </TableCell>
+      </TableRow>
     );
   }
 }

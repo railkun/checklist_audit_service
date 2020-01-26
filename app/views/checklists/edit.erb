@@ -1,2 +1,4 @@
-<!-- # <%= react_component("CheckListEdit", { checklist: { title: @checklist.title, description: @checklist.description, id: @checklist.id } }) %> -->
-<%= react_component("QuestionTable", { checklist: { title: @checklist.title, description: @checklist.description, id: @checklist.id } }) %>
+<%= react_component("CheckListForm", {
+   url: checklist_path(@checklist),
+   http_method: 'patch',
+   checklist: @checklist.props }) %>
