@@ -38,6 +38,10 @@ class ChecklistsController < ApplicationController
   def destroy
     @checklist = Checklist.find(params[:id])
     @checklist.destroy
+    render json: {
+      status: :ok,
+      redirect_url: checklists_path
+    }
   end
 
   private

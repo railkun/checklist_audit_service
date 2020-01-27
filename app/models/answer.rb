@@ -5,5 +5,5 @@ class Answer < ApplicationRecord
   belongs_to :question
 
   validates :comment, presence: true, length: { maximum: 12 }
-  validates :selected_question, presence: true, inclusion: {in: SELECTED_QUESTION}
+  validates :value, presence: true, inclusion: {in: SELECTED_QUESTION}
 end

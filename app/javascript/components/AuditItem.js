@@ -14,26 +14,23 @@ import InfoIcon from '@material-ui/icons/Info';
 
 
 
-class CheckListItem extends React.Component {
+class AuditItem extends React.Component {
 
   handleClickDelete() {
-    axios.delete(this.props.checklist.url).then(function (response) {
+    axios.delete(this.props.audit.url).then(function (response) {
       window.location.href = response.data.redirect_url;
     });
   };
 
   render () {
     return (
-      <TableRow hover key={this.props.checklist.id}>
+      <TableRow hover key={this.props.audit.id}>
         <TableCell component="th" scope="row">
-          {this.props.checklist.title}
+          {this.props.audit.checklist.title}
         </TableCell>
-        <TableCell>{this.props.checklist.description}</TableCell>
+        <TableCell>{this.props.audit.updated_at}</TableCell>
         <TableCell align="center">
-          <IconButton color="primary" href={this.props.checklist.url}>
-            <InfoIcon />
-          </IconButton>
-          <IconButton href={this.props.checklist.edit_url}>
+          <IconButton href={this.props.audit.edit_url}>
             <EditIcon />
           </IconButton>
           <IconButton aria-label="delete" color="secondary" onClick={this.handleClickDelete.bind(this)}>
@@ -46,4 +43,4 @@ class CheckListItem extends React.Component {
   }
 }
 
-export default CheckListItem
+export default AuditItem

@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 const schema = Yup.object().shape({
   answers: Yup.array()
     .of(Yup.object().shape({
-      comment: Yup.string().min(28, "Min 28 chars").required('Required'),
+      comment: Yup.string().min(2, "Min 28 chars").required('Required'),
       value: Yup.string().min(2, 'Too Short!').required('Required')
       // Rest of your amenities object properties
     }))
@@ -21,54 +21,47 @@ const schema = Yup.object().shape({
 class AuditForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.checklist)
-    // this.state = { title: '', description: '', questions: []};
-  }
 
-  // const handleSelectChange = event => {
-  //   setAge(event.target.value);
-  // };
+  }
 
   render () {
     const questions = this.props.checklist.questions;
-    // { comment: '', value: '' }
     let initAnswers = [];
+  
     this.props.checklist.questions.map((q) => {
-      initAnswers.push({ comment: '', value: '' })
+      initAnswers.push({ comment: '', value: '', question_id: q.id, answers_id: '' })
     });
 
     return (
       <Container maxWidth="sm">
-        {console.log(initAnswers)}
         <h1>{this.props.checklist.title}</h1>
         <p>{this.props.checklist.description}</p>
         <Formik
           initialValues={{ answers: initAnswers }}
           validationSchema={schema}
-          onSubmit={(values, touched) => {
-            alert('Hahahaaaaaaaaaaaaaaaa!!!!')
-            console.log(values)
-            console.log(touched)
-            // let data = {
-            //   checklist: {
-            //     title: values.title,
-            //     description: values.description,
-            //     questions_attributes: []
-            //   }
-            // };
-            // values.questions.map((question, index) => {
-            //   data['checklist']['questions_attributes'][index] = {
-            //     title: question.title,
-            //     description: question.description
-            //   }
-            // })
-            //
-            // axios.post('/checklists', {
-            //   data
-            // }).then(function (response) {
-            //   window.location.replace(response.redirect_url);
-            // })
+          onSubmit={(values, { setSubmitting }) => {
 
+            let data = {
+              audit: {
+                checklist_id: this.props.checklist.id,
+                answers_attributes: []
+              }
+            };
+            values.answers.map((answer, index) => {
+              data['audit']['answers_attributes'][index] = {
+                id: answer.id,
+                comment: answer.comment,
+                value: answer.value,
+                question_id: answer.question_id
+              }
+            })
+            axios({
+              method: this.props.http_method,
+              url:  this.props.url,
+              data: data
+            }).then(function (response) {
+              window.location.href = response.data.redirect_url;
+            });
           }}
 
         >
@@ -78,8 +71,7 @@ class AuditForm extends React.Component {
             touched,
             handleChange,
             handleBlur,
-            handleSubmit,
-            /* and other goodies */
+            handleSubmit
           }) => (
             <form onSubmit={handleSubmit}>
               <FieldArray
@@ -106,11 +98,16 @@ class AuditForm extends React.Component {
                             ) : null}
                           </div>
                           <div>
-                            <TextField
+                            <Field
                               id="standard-basic"
                               label="Comment"
                               type="text"
                               name={`answers.${index}.comment`}
+                            />
+                            <Field
+                              id="standard-basic"
+                              type="hidden"
+                              name={`answers.${index}.id`}
                             />
                             {errors.answers && typeof errors.answers[index] === 'object' && errors.answers[index].comment ? (
                               <div>{errors.answers[index].comment}</div>

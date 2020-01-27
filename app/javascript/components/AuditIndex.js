@@ -1,9 +1,11 @@
+
 import React from "react";
-import CheckListItem from "./CheckListItem";
+import AuditItem from "./AuditItem";
+import AuditCreateModal from "./AuditCreateModal";
 
 import Button from '@material-ui/core/Button';
 import { IconButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+
 import Container from '@material-ui/core/Container';
 
 import Table from '@material-ui/core/Table';
@@ -16,17 +18,29 @@ import Paper from '@material-ui/core/Paper';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import Box from '@material-ui/core/Box';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
 
-class CheckListIndex extends React.Component {
+class AuditIndex extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       count: 0,
       page: 0,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      open: ''
     };
   }
 
+
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   handleChangeRowsPerPage = event => {
     this.setState({rowsPerPage: +event.target.value});
@@ -38,9 +52,9 @@ class CheckListIndex extends React.Component {
   };
 
   render () {
-    const checklists = this.props.checklists.map((el) => {
+    const audits = this.props.audits.map((el) => {
         return (
-          <CheckListItem checklist={el} />
+          <AuditItem audit={el} />
         )
       }
     );
@@ -48,22 +62,37 @@ class CheckListIndex extends React.Component {
     return (
       <Container maxWidth="sm">
 
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <Container maxWidth="sm">
+            <Box mx="auto" bgcolor="background.paper" p={5}>
+              <div id="simple-modal-title">
+                <AuditCreateModal checklists={this.props.checklists}/>
+              </div>
+            </Box>
+          </Container>
+        </Modal>
+
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Title:</TableCell>
-                <TableCell align="center">Description:</TableCell>
+                <TableCell>Checklist title</TableCell>
+                <TableCell align="center">Last update</TableCell>
                 <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
 
               {(this.state.rowsPerPage > 0
-                ? this.props.checklists.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
-                : this.props.checklists
-              ).map(checklist => (
-                <CheckListItem checklist={checklist} />
+                ? this.props.audits.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+                : this.props.audits
+              ).map(audit => (
+                <AuditItem audit={audit} />
               ))}
 
 
@@ -72,14 +101,14 @@ class CheckListIndex extends React.Component {
             <TableFooter>
               <TableRow>
                 <Box mx="auto" bgcolor="background.paper" p={1}>
-                  <IconButton variant="contained" color="primary" href= {this.props.new_checklist_url} >
-                    <AddIcon />
-                  </IconButton>
+                  <Button variant="contained" color="success" onClick={this.handleOpen} >
+                    Audit
+                  </Button>
                 </Box>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 15]}
                   rowsPerPage={this.state.rowsPerPage}
-                  count={this.props.checklists.length}
+                  count={this.props.audits.length}
                   page={this.state.page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
@@ -94,4 +123,4 @@ class CheckListIndex extends React.Component {
   };
 }
 
-export default CheckListIndex
+export default AuditIndex

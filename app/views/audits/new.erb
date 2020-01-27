@@ -1,1 +1,4 @@
-<%= react_component("AuditForm", { checklist: @checklist.props }) %>
+<%= react_component("AuditForm", {
+  checklist: @checklist.props,
+  http_method: 'post',
+  url: audits_path, }) %>

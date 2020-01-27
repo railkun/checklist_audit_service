@@ -3,10 +3,11 @@ class AuditsController < ApplicationController
 
   def index
     @audits = Audit.all
+    @checklists = Checklist.all
   end
 
   def show
-    @checklist = Checklist.find(params[:id])
+    @audit = Audit.find(params[:id])
   end
 
   def new
@@ -14,15 +15,16 @@ class AuditsController < ApplicationController
   end
 
   def create
-    @checklist = Checklist.create(checklist_params)
+    @audits = Audit.create(audit_params)
     render json: {
       status: :ok,
-      redirect_url: checklists_path
+      redirect_url: audits_path
     }
   end
 
   def edit
-    @checklist = Checklist.find(params[:id])
+    @audit = Audit.find(params[:id])
+    @checklist = Checklist.find(@audit.checklist_id)
   end
 
   def update
@@ -35,15 +37,19 @@ class AuditsController < ApplicationController
   end
 
   def destroy
-    @checklist = Checklist.find(params[:id])
-    @checklist.destroy
+    @audit = Audit.find(params[:id])
+    @audit.destroy
+    render json: {
+      status: :ok,
+      redirect_url: audits_path
+    }
   end
 
   private
 
-  def checklist_params
-    params[:data].require(:checklist).permit(:title, :description, questions_attributes: [
-        :title, :description
+  def audit_params
+    params.require(:audit).permit(:checklist_id, answers_attributes: [
+        :id, :comment, :value, :question_id
       ]
     )
   end

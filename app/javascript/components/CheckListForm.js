@@ -4,6 +4,12 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import * as Yup from 'yup';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
@@ -26,7 +32,7 @@ class CheckListForm extends React.Component {
     const http_method = this.props.http_method;
 
     return (
-      <div>
+      <Container maxWidth="sm">
         <Formik
           initialValues={{ title: checklist.title, description: checklist.description, questions: checklist.questions }}
           validationSchema={SignupSchema}
@@ -53,12 +59,6 @@ class CheckListForm extends React.Component {
             }).then(function (response) {
               window.location.href = response.data.redirect_url;
             });
-            //
-            // console.log(values.questions)
-            // setTimeout(() => {
-            //   alert(JSON.stringify(values, null, 2));
-            //   setSubmitting(false);
-            // }, 400);
           }}
 
         >
@@ -70,48 +70,8 @@ class CheckListForm extends React.Component {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            /* and other goodies */
           }) => (
             <form onSubmit={handleSubmit}>
-              <FieldArray
-                name="questions"
-                render={arrayHelpers => (
-                  <div>
-                    {values.questions && values.questions.length > 0 ? (
-                      values.questions.map((question, index) => (
-                        <div key={index}>
-                          {question.id && (
-                            <Field type="hidden" name={`questions.${index}.id`} />
-                          )}
-                          <Field name={`questions.${index}.title`} />
-                          <Field name={`questions.${index}.description`} />
-                          <button
-                            type="button"
-                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                          >
-                            -
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                          >
-                            +
-                          </button>
-                        </div>
-                      ))
-                    ) : (
-                      <button type="button" onClick={() => arrayHelpers.push('')}>
-                        {/* show this when user has removed all friends from the list */}
-                        Add a friend
-                      </button>
-                    )}
-                    <div>
-                      <button type="submit">Submit</button>
-                    </div>
-                  </div>
-                )}
-              />
-
               <div>
                 <TextField
                   id="standard-basic"
@@ -122,9 +82,6 @@ class CheckListForm extends React.Component {
                   onBlur={handleBlur}
                   value={values.title}
                 />
-              </div>
-
-              <div>
                 <TextField
                   id="standard-basic"
                   label="Description"
@@ -134,16 +91,69 @@ class CheckListForm extends React.Component {
                   value={values.description}
                 />
               </div>
+
+              <FieldArray
+                name="questions"
+                render={arrayHelpers => (
+                  <div>
+                    {values.questions && values.questions.length > 0 ? (
+                      values.questions.map((question, index) => (
+                        <div key={index}>
+                          {question.id && (
+                            <TextField
+                              type="hidden"
+                              value={question.id}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              name={`questions.${index}.id`} />
+                          )}
+                          <TextField
+                            id="standard-basic"
+                            label="Question title"
+                            type="text"
+                            value={question.title}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name={`questions.${index}.title`} />
+                          <TextField
+                            id="standard-basic"
+                            label="Question description"
+                            type="text"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={question.description}
+                            name={`questions.${index}.description`} />
+                          <IconButton variant="contained" type="button" onClick={() => arrayHelpers.remove(index)} >
+                            <RemoveIcon />
+                          </IconButton>
+                          <IconButton variant="contained" type="button" onClick={() => arrayHelpers.insert(index, '')}>
+                            <AddIcon />
+                          </IconButton>
+                        </div>
+                      ))
+                    ) : (
+                      <Box mx="auto" bgcolor="background.paper" p={1}>
+                        <Button variant="contained" color="primary" type="button" onClick={() => arrayHelpers.push('')}>
+                          Add question
+                        </Button>
+                      </Box>
+                    )}
+                  </div>
+                )}
+              />
+
               <div>
-                <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
-                  Submit
-                </Button>
+                <Box mx="auto" bgcolor="background.paper" p={1}>
+                  <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+                    Submit
+                  </Button>
+                </Box>
               </div>
             </form>
           )}
         </Formik>
 
-      </div>
+      </Container>
     );
   };
 }
