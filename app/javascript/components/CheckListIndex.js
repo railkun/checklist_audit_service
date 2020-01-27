@@ -54,7 +54,7 @@ class CheckListIndex extends React.Component {
               <TableRow>
                 <TableCell>Title:</TableCell>
                 <TableCell align="center">Description:</TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -104,16 +104,14 @@ class CheckListForm extends React.Component {
                               type="hidden"
                               value={question.id}
                               onChange={handleChange}
-                              onBlur={handleBlur}
                               name={`questions.${index}.id`} />
                           )}
                           <TextField
                             id="standard-basic"
                             label="Question title"
                             type="text"
-                            value={question.title}
+                            value={values.questions[index].title}
                             onChange={handleChange}
-                            onBlur={handleBlur}
                             name={`questions.${index}.title`} />
                           <TextField
                             id="standard-basic"
@@ -121,12 +119,12 @@ class CheckListForm extends React.Component {
                             type="text"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={question.description}
+                            value={values.questions[index].description}
                             name={`questions.${index}.description`} />
                           <IconButton variant="contained" type="button" onClick={() => arrayHelpers.remove(index)} >
                             <RemoveIcon />
                           </IconButton>
-                          <IconButton variant="contained" type="button" onClick={() => arrayHelpers.insert(index, '')}>
+                          <IconButton variant="contained" type="button" onClick={() => arrayHelpers.insert(index, {title: '', description: ''})}>
                             <AddIcon />
                           </IconButton>
                         </div>

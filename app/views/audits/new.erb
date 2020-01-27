@@ -1,4 +1,5 @@
 <%= react_component("AuditForm", {
   checklist: @checklist.props,
+  audit: {answers: @checklist.questions.map{|a| { id: nil, comment: '', value: '', question_id: nil} }},
   http_method: 'post',
   url: audits_path, }) %>

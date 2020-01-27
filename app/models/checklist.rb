@@ -8,6 +8,8 @@ class Checklist < ApplicationRecord
   accepts_nested_attributes_for :questions, :allow_destroy => true, update_only: true
 
   def props
-    attributes.merge({'questions' => questions.map{ |q| q.attributes }})
+    attributes.merge(
+      {'questions' => questions.map{ |q| q.attributes }}
+    )
   end
 end

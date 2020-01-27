@@ -1,4 +1,5 @@
 <%= react_component("AuditForm", {
-   url: checklist_path(@checklist),
-   http_method: 'patch',
-   checklist: @checklist.props }) %>
+  url: audit_path(@audit),
+  audit: @audit.props,
+  http_method: 'patch',
+  checklist: @checklist.props }) %>

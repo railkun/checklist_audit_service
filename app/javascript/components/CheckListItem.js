@@ -29,7 +29,7 @@ class CheckListItem extends React.Component {
           {this.props.checklist.title}
         </TableCell>
         <TableCell>{this.props.checklist.description}</TableCell>
-        <TableCell align="center">
+        <TableCell align="right">
           <IconButton color="primary" href={this.props.checklist.url}>
             <InfoIcon />
           </IconButton>

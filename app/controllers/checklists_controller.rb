@@ -14,6 +14,7 @@ class ChecklistsController < ApplicationController
   end
 
   def create
+    binding.pry
     @checklist = Checklist.create(checklist_params)
     render json: {
       status: :ok,

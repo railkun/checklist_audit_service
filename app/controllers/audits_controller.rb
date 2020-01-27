@@ -11,7 +11,8 @@ class AuditsController < ApplicationController
   end
 
   def new
-    @checklist = Checklist.find(params[:checklist_id])
+    @audit = Audit.new(checklist_id: params[:checklist_id])
+    @checklist = @audit.checklist
   end
 
   def create
@@ -24,16 +25,17 @@ class AuditsController < ApplicationController
 
   def edit
     @audit = Audit.find(params[:id])
-    @checklist = Checklist.find(@audit.checklist_id)
+    @checklist = @audit.checklist
   end
 
   def update
-    @question = Question.new(question_params)
-    if @question.save
-      @checklist.update(checklist_params)
-    else
-      return
-    end
+    @audit = Audit.find(params[:id])
+
+    @audit.update(audit_params)
+    render json: {
+      status: :ok,
+      redirect_url: audits_path
+    }
   end
 
   def destroy

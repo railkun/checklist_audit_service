@@ -30,28 +30,26 @@ class NavBar extends React.Component {
   render () {
     return (
       <Box mx="auto" p={1}>
-
-          <TableContainer component={Paper} >
-            <Table aria-label="simple table" bgcolor="LightSlateGray">
-              <TableRow>
-                <TableCell align="left">
-                  <h3>Checklist audit service</h3>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton variant="contained" onClick={this.handleClickChecklist} color="text.primary">
-                    <PlaylistAddCheckSharpIcon />
-                  </IconButton>
-                  <IconButton variant="contained" onClick={this.handleClickAudit} color="text.primary">
-                    <CheckBoxSharpIcon />
-                  </IconButton>
-                  <IconButton variant="contained" onClick={this.handleClickBack}>
-                    <BackspaceSharpIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </Table>
-          </TableContainer>
-
+        <TableContainer component={Paper} >
+          <Table aria-label="simple table" bgcolor="LightSlateGray">
+            <TableRow>
+              <TableCell align="left">
+                <h3>Checklist audit service</h3>
+              </TableCell>
+              <TableCell align="right">
+                <IconButton variant="contained" onClick={this.handleClickChecklist} color="text.primary">
+                  <PlaylistAddCheckSharpIcon />
+                </IconButton>
+                <IconButton variant="contained" onClick={this.handleClickAudit} color="text.primary">
+                  <CheckBoxSharpIcon />
+                </IconButton>
+                <IconButton variant="contained" onClick={this.handleClickBack}>
+                  <BackspaceSharpIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          </Table>
+        </TableContainer>
       </Box>
     )
   }

@@ -1,5 +1,5 @@
 class Answer < ApplicationRecord
-  SELECTED_QUESTION = %w(yes not na).freeze
+  SELECTED_QUESTION = %w(yes no NA).freeze
 
   belongs_to :audit
   belongs_to :question
