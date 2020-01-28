@@ -61,7 +61,6 @@ class AuditForm extends React.Component {
               }
             })
 
-            alert('should send here')
             axios({
               method: this.props.http_method,
               url:  this.props.url,
@@ -81,8 +80,6 @@ class AuditForm extends React.Component {
             handleSubmit
           }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(values.answers)}
-              {console.log(questions)}
               <FieldArray
                 name="answers"
                 render={arrayHelpers => (
