@@ -28,15 +28,18 @@ class CheckListDetailed extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.checklist.questions.map((question) => {
-                  return (
-                    <TableRow hover key={question.id}>
-                      <TableCell>{question.title}</TableCell>
-                      <TableCell align="center">{question.description}</TableCell>
-                    </TableRow>
-                  )
-                })
-              }
+              {this.props.checklist.questions && this.props.checklist.questions.length > 0 ? (
+                this.props.checklist.questions.map((question) => {
+                    return (
+                      <TableRow hover key={question.id}>
+                        <TableCell>{question.title}</TableCell>
+                        <TableCell align="center">{question.description}</TableCell>
+                      </TableRow>
+                    )
+                  })
+                ) : (
+                <p> Sorry but there is no questions </p>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

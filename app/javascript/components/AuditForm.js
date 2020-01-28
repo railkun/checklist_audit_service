@@ -18,7 +18,7 @@ import Box from '@material-ui/core/Box';
 const schema = Yup.object().shape({
   answers: Yup.array()
     .of(Yup.object().shape({
-      comment: Yup.string().min(2, "Min 28 chars").required('Required'),
+      comment: Yup.string().min(12, "Min 28 chars").required('Required'),
       value: Yup.string().min(2, 'Too Short!').required('Required')
     }))
 });

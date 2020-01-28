@@ -13,13 +13,15 @@ import Box from '@material-ui/core/Box';
 
 const SignupSchema = Yup.object().shape({
   title: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
+    .max(40, 'Too Long!')
     .required('Required'),
-  description: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required')
+  questions: Yup.array()
+    .of(Yup.object().shape({
+      title: Yup.string()
+        .min(12, "Too Short!")
+        .max(40, 'Too Long!')
+        .required('Required')
+    }))
 });
 
 class CheckListForm extends React.Component {
@@ -82,6 +84,10 @@ class CheckListForm extends React.Component {
                   onBlur={handleBlur}
                   value={values.title}
                 />
+
+                {errors.title && (
+                  <span>{errors.title}</span>
+                )}
                 <TextField
                   id="standard-basic"
                   label="Description"
@@ -113,6 +119,9 @@ class CheckListForm extends React.Component {
                             value={values.questions[index].title}
                             onChange={handleChange}
                             name={`questions.${index}.title`} />
+                          {Array.isArray(errors.questions) && errors.questions[index] != null && typeof errors.questions[index] === 'object' && errors.questions[index].title && (
+                            <span>{errors.questions[index].title}</span>
+                          )}
                           <TextField
                             id="standard-basic"
                             label="Question description"

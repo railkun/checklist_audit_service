@@ -87,15 +87,16 @@ class AuditIndex extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-
-              {(this.state.rowsPerPage > 0
-                ? this.props.audits.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
-                : this.props.audits
-              ).map(audit => (
-                <AuditItem audit={audit} />
-              ))}
-
-
+              {this.props.audits && this.props.audits.length > 0 ? (
+                (this.state.rowsPerPage > 0
+                  ? this.props.audits.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+                  : this.props.audits
+                ).map(audit => (
+                  <AuditItem audit={audit} />
+                ))
+              ) : (
+                <p> Sorry but there is no audits </p>
+              )}
             </TableBody>
 
             <TableFooter>

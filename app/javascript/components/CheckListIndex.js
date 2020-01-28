@@ -58,15 +58,16 @@ class CheckListIndex extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-
-              {(this.state.rowsPerPage > 0
-                ? this.props.checklists.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
-                : this.props.checklists
-              ).map(checklist => (
-                <CheckListItem checklist={checklist} />
-              ))}
-
-
+              {this.props.checklists && this.props.checklists.length > 0 ? (
+                (this.state.rowsPerPage > 0
+                  ? this.props.checklists.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+                  : this.props.checklists
+                ).map(checklist => (
+                  <CheckListItem checklist={checklist} />
+                ))
+              ) : (
+                <p> Sorry but there is no checklists </p>
+              )}
             </TableBody>
 
             <TableFooter>

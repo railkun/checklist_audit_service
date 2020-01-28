@@ -1,7 +1,7 @@
 <%= react_component("AuditIndex", {
   audits: @audits.map{|a| {
     checklist: a.checklist,
-    updated_at: a.updated_at,
+    updated_at: a.updated_at.strftime('%d.%m.%Y - %H:%M'),
     url: audit_path(a),
     edit_url: edit_audit_path(a) }},
   new_audit_url: new_audit_path,
