@@ -3,7 +3,7 @@ It is my rails app for create and audit checklist.
 
 ## About app
 
-In this app you can create and audit checklists.
+In this app you can create checklists and audits for them.
 You can create, edit, delete your checklists and audits.
 
 ## Usage
